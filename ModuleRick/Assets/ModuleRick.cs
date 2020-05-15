@@ -14,6 +14,7 @@ public class ModuleRick : MonoBehaviour
     public Material[] IMMODULERICK;
     public GameObject Rickle;
     public KMSelectable Rickie;
+    public GameObject[] RickleRick;
 
     static int moduleIdCounter = 1;
     int moduleId;
@@ -21,9 +22,13 @@ public class ModuleRick : MonoBehaviour
     int fat = 0;
     int otherotherfat = 0;
     string otherotherotherfat = "FATASSANSWERCONFIRMCONFIRMANSWERGUCCI";
+    #pragma warning disable 0649
+    private bool TwitchPlaysActive;
+    #pragma warning restore 0649
+    Vector3 scaleChange = new Vector3(-4f, -4f, -4f);
 
     void Awake()
-	{
+	 {
 		moduleId = moduleIdCounter++;
 		Iturnedmyselfintoamodulemortyyyyyyyyyyy.OnInteract += delegate () { PressRick(); return false; };
 		Rickie.OnInteract += delegate () { PressRicksBalls(); return false; };
@@ -31,6 +36,7 @@ public class ModuleRick : MonoBehaviour
 
     void Start()
 	{
+    StartCoroutine(Thing());
 		otherotherotherfat = Bomb.GetSerialNumber();
 		fat = (int)Char.GetNumericValue(otherotherotherfat[5]);
 		if (fat == 0)
@@ -56,11 +62,20 @@ public class ModuleRick : MonoBehaviour
 			Rickle.GetComponent<MeshRenderer>().material = IMMODULERICK[otherotherfat];
 		}
 	}
-
+  IEnumerator Thing(){
+    yield return new WaitForSeconds(1f);
+    if (TwitchPlaysActive == true) {
+      RickleRick[0].transform.localScale += scaleChange;
+    }
+    StopCoroutine("Thing");
+  }
 	void PressRicksBalls()
 	{
 		Rickie.AddInteractionPunch();
 		GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
+    if (moduleSolved) {
+      Audio.PlaySoundAtTransform("ImGoingIntoCardiacArrest", transform);
+    }
 		if (!moduleSolved)
 		{
 			if (otherotherfat == fat)
@@ -78,14 +93,14 @@ public class ModuleRick : MonoBehaviour
 			}
 		}
 	}
-	
+
 	//twitch plays
     #pragma warning disable 414
-    private readonly string TwitchHelpMessage = @"Use the command !{0} press [1-11] to press the module | Use the command !{0} submit to press the ring";
+    private readonly string TwitchHelpMessage = @"Use the command !{0} press [1-10] to press the module | Use the command !{0} submit to press the ring";
     #pragma warning restore 414
-	
-	string[] Valid = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11"};
-	
+
+	string[] Valid = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+
 	IEnumerator ProcessTwitchCommand(string command)
 	{
 		string[] parameters = command.Split(' ');
@@ -94,7 +109,7 @@ public class ModuleRick : MonoBehaviour
 			yield return null;
 			Rickie.OnInteract();
 		}
-		
+
 		else if (Regex.IsMatch(parameters[0], @"^\s*press\s*$", RegexOptions.IgnoreCase | RegexOptions.CultureInvariant))
 		{
 			yield return null;
@@ -103,13 +118,13 @@ public class ModuleRick : MonoBehaviour
 				yield return "sendtochaterror The parameter length is invalid";
 				yield break;
 			}
-			
+
 			if (!parameters[1].EqualsAny(Valid))
 			{
 				yield return "sendtochaterror The text written is not between 1-10";
 				yield break;
 			}
-			
+
 			for (int x = 0; x < Int32.Parse(parameters[1]); x++)
 			{
 				Iturnedmyselfintoamodulemortyyyyyyyyyyy.OnInteract();

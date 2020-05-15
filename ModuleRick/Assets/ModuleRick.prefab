@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4714604458786584}
   - component: {fileID: 114867818892541962}
   m_Layer: 0
-  m_Name: StatusLight
+  m_Name: StatusLightBig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -671,6 +671,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 0a7d001f7adf1c245b2fec3c7d4baa7f, type: 2}
   Rickle: {fileID: 1659010949598382}
   Rickie: {fileID: 114535326246818358}
+  RickleRick:
+  - {fileID: 1082562161454214}
 --- !u!114 &114782588590705882
 MonoBehaviour:
   m_ObjectHideFlags: 1
