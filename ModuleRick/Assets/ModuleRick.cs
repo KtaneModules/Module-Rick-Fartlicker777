@@ -63,7 +63,7 @@ public class ModuleRick : MonoBehaviour
 		}
 	}
   IEnumerator Thing(){
-    yield return new WaitForSeconds(1f);
+    yield return new WaitForSeconds(.000000001f);
     if (TwitchPlaysActive == true) {
       RickleRick[0].transform.localScale += scaleChange;
     }
