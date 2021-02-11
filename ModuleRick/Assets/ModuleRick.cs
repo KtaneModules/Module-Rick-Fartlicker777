@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
 using UnityEngine;
 using KModkit;
@@ -14,7 +12,6 @@ public class ModuleRick : MonoBehaviour
     public Material[] IMMODULERICK;
     public GameObject Rickle;
     public KMSelectable Rickie;
-    public GameObject[] RickleRick;
 
     static int moduleIdCounter = 1;
     int moduleId;
@@ -22,10 +19,6 @@ public class ModuleRick : MonoBehaviour
     int fat = 0;
     int otherotherfat = 0;
     string otherotherotherfat = "FATASSANSWERCONFIRMCONFIRMANSWERGUCCI";
-    #pragma warning disable 0649
-    private bool TwitchPlaysActive;
-    #pragma warning restore 0649
-    Vector3 scaleChange = new Vector3(-4f, -4f, -4f);
 
     void Awake()
 	 {
@@ -36,7 +29,6 @@ public class ModuleRick : MonoBehaviour
 
     void Start()
 	{
-    StartCoroutine(Thing());
 		otherotherotherfat = Bomb.GetSerialNumber();
 		fat = (int)Char.GetNumericValue(otherotherotherfat[5]);
 		if (fat == 0)
@@ -62,17 +54,11 @@ public class ModuleRick : MonoBehaviour
 			Rickle.GetComponent<MeshRenderer>().material = IMMODULERICK[otherotherfat];
 		}
 	}
-  IEnumerator Thing(){
-    yield return new WaitForSeconds(.000000001f);
-    if (TwitchPlaysActive == true) {
-      RickleRick[0].transform.localScale += scaleChange;
-    }
-    StopCoroutine("Thing");
-  }
+
 	void PressRicksBalls()
 	{
 		Rickie.AddInteractionPunch();
-		GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
+		GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, Rickie.transform);
     if (moduleSolved) {
       Audio.PlaySoundAtTransform("ImGoingIntoCardiacArrest", transform);
     }
@@ -128,8 +114,19 @@ public class ModuleRick : MonoBehaviour
 			for (int x = 0; x < Int32.Parse(parameters[1]); x++)
 			{
 				Iturnedmyselfintoamodulemortyyyyyyyyyyy.OnInteract();
-				yield return new WaitForSecondsRealtime(0.2f);
+				yield return new WaitForSeconds(0.2f);
 			}
 		}
+	}
+
+	IEnumerator TwitchHandleForcedSolve()
+    {
+		yield return null;
+		while (otherotherfat != fat)
+        {
+			Iturnedmyselfintoamodulemortyyyyyyyyyyy.OnInteract();
+			yield return new WaitForSeconds(0.2f);
+		}
+		Rickie.OnInteract();
 	}
 }
